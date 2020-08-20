@@ -10,7 +10,7 @@ function execute(db){
         bio TEXT
     );
 
-    CREATE TABLE IF NOT EXISTS classes (
+    CREATE TABLE IF NOT EXISTS class (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         subject INTEGER,
         cost TEXT,

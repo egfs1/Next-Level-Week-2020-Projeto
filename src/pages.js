@@ -9,17 +9,7 @@ async function pageStudy(req,res){
     const filters = req.query
     
     if(!filters.weekday || !filters.subject || !filters.time){
-        const query = `
-            SELECT class.*, proffys.*
-            FROM proffys
-            JOIN class ON (class.proffy_id = proffys.id)
-        `
-        const db = await database
-        const proffys = await db.all(query)
-        proffys.map((proffys)=>{
-            proffys.subject = getSubject(proffys.subject)
-        })
-        return res.render("study.html", {filters, subjects, weekdays, proffys})
+        return res.render("study.html", {filters, subjects, weekdays})
     }
     
     const timeToMinutes = convertHoursToMinutes(filters.time)
@@ -33,10 +23,11 @@ async function pageStudy(req,res){
             WHERE class_schedule.class_id = class.id 
             AND class_schedule.weekday = ${filters.weekday}
             AND class_schedule.time_from <= ${timeToMinutes}
-            AND class_schedule.time_to > ${timeToMinutes}
+            AND class_schedule.time_to >= ${timeToMinutes}
         )
         AND class.subject = ${filters.subject}
     `
+
 
     try{
         const db = await database
@@ -45,6 +36,11 @@ async function pageStudy(req,res){
         proffys.map((proffy)=>{
             proffy.subject = getSubject(proffy.subject)
         })
+
+        console.log(filters)
+        console.log(filters.weekday)
+        console.log(timeToMinutes)
+        console.log(filters.subject)
         
         return res.render("study.html", {filters, subjects, weekdays, proffys})
     }catch(error){
@@ -70,7 +66,7 @@ async function saveClasses(req, res){
         subject:req.body.subject,
         cost:req.body.cost
     }
-    const classScheduleValue = req.body.weekday.map((weekday, index)=>{
+    const classScheduleValues = req.body.weekday.map((weekday, index)=>{
         console.log(weekday)
         console.log(index)
         return {
@@ -81,7 +77,7 @@ async function saveClasses(req, res){
     })
 
     try{
-        await createProffy(db, {proffyValue, classValue, classScheduleValue})
+        await createProffy(db, {proffyValue, classValue, classScheduleValues})
 
         let queryString = "?subject="+req.body.subject
         queryString += "&weekday="+req.body.weekday[0]

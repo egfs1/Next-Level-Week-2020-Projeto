@@ -6,7 +6,7 @@ database.then(async (db) => {
         name: "Eduardo" , 
         avatar: "https://cdn.discordapp.com/attachments/435945895649869836/722859767705370795/image0.jpg", 
         whatsapp: "87999223925", 
-        bio: "Sou Foda", 
+        bio: "olaaaaaaaaaaaaaaaaaaaaaaaaa", 
     }
 
     classValue = {

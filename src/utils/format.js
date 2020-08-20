@@ -27,12 +27,13 @@ const weekdays = [
 
 
 function getSubject(subjectNumber){
-    return subjects[subjectNumber-1]
+    // const position = +subjectNumber - 1
+    return subjects[subjectNumber]
 }
 
 function convertHoursToMinutes(time) {
     const [hours, minutes] = time.split(":")
-    return Number((hours*60) + minutes)
+    return Number((Number(hours)*60) + Number(minutes))
 }
 
 module.exports = {

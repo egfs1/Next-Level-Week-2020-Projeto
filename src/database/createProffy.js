@@ -10,14 +10,14 @@ module.exports = async function(db, {proffyValue, classValue, classScheduleValue
             "${proffyValue.name}",
             "${proffyValue.avatar}",
             "${proffyValue.whatsapp}",
-            "${proffyValue.view}"
+            "${proffyValue.bio}"
         );
     `)
 
     const proffy_id = insertedProffy.lastID
 
     const insertedClass = await db.run(`
-        insert into classes (
+        insert into class (
             subject,
             cost,
             proffy_id

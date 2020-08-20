@@ -32,7 +32,7 @@
                             <option value="" hidden="">Selecione uma matéria</option>
                             
                             {%for subject in subjects %}
-                            <option value="{{loop.index}}"  {{"selected" if filters.subject == loop.index }}>{{subject}}</option>
+                            <option value="{{loop.index0}}"  {{"selected" if filters.subject == loop.index0 }}>{{subject}}</option>
                             {%endfor%}
 
                         </select>
